@@ -53,6 +53,7 @@ const mockDate = customDate => class extends Date {
   }    
 };
 
+
 const checkDescriptionAtTime = ( time, expectDescription ) => {
   it(`should show correct at ${time}`, () => {
     global.Date = mockDate(`2019-05-14T${time}.135Z`);
