@@ -4,12 +4,31 @@ import styles from './OrderSummary.scss';
 
 import { formatPrice } from '../../../utils/formatPrice';
 import { calculateTotal } from '../../../utils/calculateTotal';
+import { getCountdownTime } from '../../../utils/getCountdownTime';
+import { promoPrice } from '../../../utils/promoPrice';
 
-const OrderSummary = ({ tripCost, options }) => (
-  <h2 className={styles.component}>
-    Total: <strong>{formatPrice(calculateTotal(tripCost, options))}</strong>
-  </h2>
-);
+const OrderSummary = ({ tripCost, options }) => {
+  
+  if ( getCountdownTime > 23*60*60 && getCountdownTime <= 24*60*60 ) {
+    return (
+      <div className={styles.component}>
+        <h2>
+          Price from: <strong>{formatPrice(calculateTotal(tripCost, options))}</strong>
+        </h2>
+        <h3>
+          Standart price: <strong>{formatPrice(promoPrice(calculateTotal(tripCost, options), 20))}</strong>
+        </h3>
+      </div>
+    );    
+  } else {    
+    return (
+      <h2 className={styles.component}>
+        Total: <strong>{formatPrice(calculateTotal(tripCost, options))}</strong>
+      </h2>
+    );
+  }   
+  
+};
 
 OrderSummary.propTypes = {
   tripCost: PropTypes.string,
