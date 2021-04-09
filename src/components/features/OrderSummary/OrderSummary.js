@@ -9,14 +9,14 @@ import { promoPrice } from '../../../utils/promoPrice';
 
 const OrderSummary = ({ tripCost, options }) => {
   
-  if ( getCountdownTime > 23*60*60 && getCountdownTime <= 24*60*60 ) {
+  if ( getCountdownTime() > 23*60*60 && getCountdownTime() <= 24*60*60 ) {
     return (
       <div className={styles.component}>
         <h2>
-          Price from: <strong>{formatPrice(calculateTotal(tripCost, options))}</strong>
+          Happy Hour price: <strong>{formatPrice(promoPrice(calculateTotal(tripCost, options), 20))}</strong>
         </h2>
         <h3>
-          Standart price: <strong>{formatPrice(promoPrice(calculateTotal(tripCost, options), 20))}</strong>
+          Standart price: <strong>{formatPrice(calculateTotal(tripCost, options))}</strong>
         </h3>
       </div>
     );    

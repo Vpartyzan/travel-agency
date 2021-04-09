@@ -7,13 +7,17 @@ import settings from '../../../data/settings';
 
 import { formatPrice } from '../../../utils/formatPrice';
 import { calculateTotal } from '../../../utils/calculateTotal';
+import { getCountdownTime } from '../../../utils/getCountdownTime';
+import { promoPrice } from '../../../utils/promoPrice';
 
 import OrderSummary from '../OrderSummary/OrderSummary';
 import OrderOption from '../OrderOption/OrderOption';
 import Button from '../../common/Button/Button';
 
 const sendOrder = (options, tripCost, tripData) => {
-  const totalCost = formatPrice(calculateTotal(tripCost, options));
+  const totalCost = ( getCountdownTime() > 23*60*60 && getCountdownTime() <= 24*60*60 ) 
+    ? formatPrice(promoPrice(calculateTotal(tripCost, options), 20)) 
+    : formatPrice(calculateTotal(tripCost, options));
 
   const payload = {
     tripId: tripData.id,
